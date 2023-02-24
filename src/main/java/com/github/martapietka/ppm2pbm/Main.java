@@ -1,4 +1,4 @@
-package org.example;
+package com.github.martapietka.ppm2pbm;
 
 import java.io.*;
 import java.nio.file.Files;
