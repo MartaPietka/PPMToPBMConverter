@@ -4,14 +4,12 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
-import static org.junit.jupiter.api.Assertions.*;
 class PpmToPbmConverterTest {
-
     @Test
-    void convert() {
+    void convert() throws IOException {
         String expectedOutputString = """
                 P1
                 3 3
