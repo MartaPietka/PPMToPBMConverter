@@ -9,17 +9,11 @@ public class Main {
 
         Path path = Path.of(args[0]);
 
-        StringBuilder sb = new StringBuilder();
-
         try (InputStream inputStream = Files.newInputStream(path)) {
-            int content;
-            while ((content = inputStream.read()) != -1) {
-                sb.append(Integer.toHexString(content)).append(" ");
-            }
+            PpmToPbmConverter.convert(inputStream, System.out);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
 
-        System.out.println(sb);
     }
 }
