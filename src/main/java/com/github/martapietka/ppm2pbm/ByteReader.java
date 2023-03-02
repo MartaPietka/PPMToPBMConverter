@@ -19,7 +19,7 @@ public class ByteReader {
             sb.append(digit);
         }
 
-        return Integer.valueOf(sb.toString());
+        return Integer.parseInt(sb.toString());
     }
 }
 

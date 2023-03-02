@@ -18,7 +18,10 @@ public class ByteReaderTest {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(array);
         int result = ByteReader.convertBytesToInt(byteArrayInputStream);
 
+        int remainingByte = byteArrayInputStream.read();
+
         // THEN
         assertThat(result).isEqualTo(expectedResult);
+        assertThat(remainingByte).isEqualTo(0x38);
     }
 }
