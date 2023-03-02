@@ -19,7 +19,6 @@ public class ByteReader {
             sb.append(digit);
         }
 
-        inputStream.close();
         return Integer.valueOf(sb.toString());
     }
 }
