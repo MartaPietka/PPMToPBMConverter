@@ -9,13 +9,10 @@ public class ByteReader {
 
         StringBuilder sb = new StringBuilder();
 
-        int number;
-        while ((number = inputStream.read()) != -1) {
-            if (number <= 0x1F) {
-                break;
-            }
-            number -= 48;
-            sb.append(number);
+        int byteValue;
+        while ((byteValue = inputStream.read()) > 0x1F) {
+            int digit = byteValue - 48;
+            sb.append(digit);
         }
 
         return Integer.parseInt(sb.toString());
