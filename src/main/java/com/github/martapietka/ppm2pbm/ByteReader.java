@@ -7,16 +7,15 @@ public class ByteReader {
 
     public static int convertBytesToInt(InputStream inputStream) throws IOException {
 
-        byte[] array = inputStream.readAllBytes();
-
         StringBuilder sb = new StringBuilder();
 
-        for (int a=0; a < array.length; a++) {
-            if (array[a] <= 0x1F) {
+        int number;
+        while ((number = inputStream.read()) != -1) {
+            if (number <= 0x1F) {
                 break;
             }
-            int digit = array[a] - 48;
-            sb.append(digit);
+            number -= 48;
+            sb.append(number);
         }
 
         return Integer.parseInt(sb.toString());
