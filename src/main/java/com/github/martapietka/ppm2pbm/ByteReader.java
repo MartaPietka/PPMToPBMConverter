@@ -10,7 +10,7 @@ public class ByteReader {
         StringBuilder sb = new StringBuilder();
 
         int byteValue;
-        while ((byteValue = inputStream.read()) > 0x1F) {
+        while ((byteValue = inputStream.read()) > 0x20) {
             int digit = byteValue - 48;
             sb.append(digit);
         }

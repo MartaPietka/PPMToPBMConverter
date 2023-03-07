@@ -14,7 +14,7 @@ public class ByteReaderTest {
         int expectedResult = 2023;
 
         // WHEN
-        byte[] array = {0x32, 0x30, 0x32, 0x33, 0xA, 0x38};
+        byte[] array = {0x32, 0x30, 0x32, 0x33, 0x20, 0x38};
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(array);
         int result = ByteReader.convertBytesToInt(byteArrayInputStream);
 
