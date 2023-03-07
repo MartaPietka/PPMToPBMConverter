@@ -4,7 +4,7 @@ import java.io.*;
 
 public class PpmToPbmConverter {
 
-    public static void convert(InputStream inputStream , OutputStream outputStream) throws IOException {
+    public static void convert(InputStream inputStream, OutputStream outputStream) throws IOException {
 
         byte[] header = inputStream.readNBytes(3);
 
@@ -23,11 +23,9 @@ public class PpmToPbmConverter {
             // skip comment
         }
 
-        outputStream.write(header);
-
-        int size;
-        while ((size = inputStream.read()) > 0x1F) {
-            outputStream.write(size);
-        }
+        header[1] = 0x31;
+        PrintStream printStream = new PrintStream(outputStream);
+//        printStream.write(header);
+        printStream.write(ByteReader.convertBytesToInt(inputStream));
     }
 }
