@@ -24,22 +24,20 @@ public class PpmToPbmConverter {
             // skip comment
         }
 
-        byte[] newHeader = {header[0], 0x31, header[2]};
+        byte[] p1Header = {0x50, 0x31, 0x20, 0xA};
 
         int width = ByteReader.convertBytesToInt(inputStream);
         int height = ByteReader.convertBytesToInt(inputStream);
 
-        String newWidth = Integer.toString(width);
-        newWidth.getBytes(StandardCharsets.UTF_8);
+        String widthString = Integer.toString(width);
+        byte[] widthBytes = widthString.getBytes(StandardCharsets.UTF_8);
 
-        String newHeight = Integer.toString(height);
-        newHeight.getBytes(StandardCharsets.UTF_8);
+        String heightString = Integer.toString(height);
+        byte[] heightBytes = heightString.getBytes(StandardCharsets.UTF_8);
 
-        PrintStream printStream = new PrintStream(outputStream);
-
-        printStream.write(newHeader);
-        printStream.write(newWidth.getBytes());
-        printStream.write(" ".getBytes());
-        printStream.write(newHeight.getBytes());
+        outputStream.write(p1Header);
+        outputStream.write(widthBytes);
+        outputStream.write(0x20);
+        outputStream.write(heightBytes);
     }
 }
