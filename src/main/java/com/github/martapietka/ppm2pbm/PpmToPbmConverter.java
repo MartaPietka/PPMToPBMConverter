@@ -1,6 +1,7 @@
 package com.github.martapietka.ppm2pbm;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class PpmToPbmConverter {
 
@@ -23,9 +24,22 @@ public class PpmToPbmConverter {
             // skip comment
         }
 
-        header[1] = 0x31;
+        byte[] newHeader = {header[0], 0x31, header[2]};
+
+        int width = ByteReader.convertBytesToInt(inputStream);
+        int height = ByteReader.convertBytesToInt(inputStream);
+
+        String newWidth = Integer.toString(width);
+        newWidth.getBytes(StandardCharsets.UTF_8);
+
+        String newHeight = Integer.toString(height);
+        newHeight.getBytes(StandardCharsets.UTF_8);
+
         PrintStream printStream = new PrintStream(outputStream);
-//        printStream.write(header);
-        printStream.write(ByteReader.convertBytesToInt(inputStream));
+
+        printStream.write(newHeader);
+        printStream.write(newWidth.getBytes());
+        printStream.write(" ".getBytes());
+        printStream.write(newHeight.getBytes());
     }
 }
