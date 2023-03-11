@@ -3,9 +3,9 @@ package com.github.martapietka.ppm2pbm;
 import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-public class rgbToVvalueTest {
+public class RgbToGrayscaleConverterTest {
     @Test
-    void convertRgbToVvalueGreen() {
+    void convertRgbToGreen() {
 
         int expectedResult = 235;
 
@@ -14,14 +14,14 @@ public class rgbToVvalueTest {
         int g = 235;
         int b = 125;
 
-        int result = rgbToVvalue.convertRgbToVvalue(r, g, b);
+        int result = RgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b);
 
         // THEN
         assertThat(result).isEqualTo(expectedResult);
     }
 
     @Test
-    void convertRgbToVvalueWhite() {
+    void convertRgbToWhite() {
 
         int expectedResult = 255;
 
@@ -30,14 +30,14 @@ public class rgbToVvalueTest {
         int g = 255;
         int b = 255;
 
-        int result = rgbToVvalue.convertRgbToVvalue(r, g, b);
+        int result = RgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b);
 
         // THEN
         assertThat(result).isEqualTo(expectedResult);
     }
 
     @Test
-    void convertRgbToVvalueBlack() {
+    void convertRgbToBlack() {
 
         int expectedResult = 0;
 
@@ -46,14 +46,14 @@ public class rgbToVvalueTest {
         int g = 0;
         int b = 0;
 
-        int result = rgbToVvalue.convertRgbToVvalue(r, g, b);
+        int result = RgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b);
 
         // THEN
         assertThat(result).isEqualTo(expectedResult);
     }
 
     @Test
-    void convertRgbToVvalueGrey() {
+    void convertRgbToGray() {
 
         int expectedResult = 128;
 
@@ -62,14 +62,14 @@ public class rgbToVvalueTest {
         int g = 128;
         int b = 128;
 
-        int result = rgbToVvalue.convertRgbToVvalue(r, g, b);
+        int result = RgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b);
 
         // THEN
         assertThat(result).isEqualTo(expectedResult);
     }
 
     @Test
-    void convertRgbToVvalueBrown() {
+    void convertRgbToBrown() {
 
         int expectedResult = 115;
 
@@ -78,7 +78,7 @@ public class rgbToVvalueTest {
         int g = 40;
         int b = 60;
 
-        int result = rgbToVvalue.convertRgbToVvalue(r, g, b);
+        int result = RgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b);
 
         // THEN
         assertThat(result).isEqualTo(expectedResult);
