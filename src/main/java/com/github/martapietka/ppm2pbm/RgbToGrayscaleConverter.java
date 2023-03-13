@@ -1,18 +1,14 @@
 package com.github.martapietka.ppm2pbm;
 
+import java.util.stream.IntStream;
+
 public class RgbToGrayscaleConverter {
 
     public static int convertRgbToGrayscale(int r, int g, int b) {
 
-        int[] rgbArray = {r, g, b};
+        return IntStream.of(r, g, b)
+                .max()
+                .orElse(0);
 
-        int v = rgbArray[0];
-        for(int i=0; i<rgbArray.length; i++) {
-            if (rgbArray[i] > v) {
-                v = rgbArray[i];
-            }
-        }
-
-        return v;
     }
 }
