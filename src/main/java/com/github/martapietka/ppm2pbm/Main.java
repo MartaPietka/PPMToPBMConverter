@@ -7,10 +7,11 @@ import java.nio.file.Path;
 public class Main {
     public static void main(String[] args) {
 
-        Path path = Path.of(args[0]);
+        Path inputPath = Path.of(args[0]);
+        Path outputPath = Path.of(args[1]);
 
-        try (InputStream inputStream = Files.newInputStream(path);
-        OutputStream outputStream = Files.newOutputStream(Path.of("/Users/martapietka/output.pgm"))) {
+        try (InputStream inputStream = Files.newInputStream(inputPath);
+        OutputStream outputStream = Files.newOutputStream(outputPath)) {
             PpmToPgmConverter.convert(inputStream, outputStream);
         } catch (IOException e) {
             System.out.println(e.getMessage());

@@ -54,7 +54,7 @@ public class PpmToPgmConverter {
             int r = Byte.toUnsignedInt(rgbArray[0]);
             int g = Byte.toUnsignedInt(rgbArray[1]);
             int b = Byte.toUnsignedInt(rgbArray[2]);
-            int grayscale = RgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b);
+            int grayscale = RgbToGrayscaleByWeightConverter.convertRgbToGrayscale(r, g, b);
             outputStream.write(grayscale);
         }
         outputStream.flush();
