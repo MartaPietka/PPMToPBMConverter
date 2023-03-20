@@ -1,11 +1,9 @@
 package com.github.martapietka.ppm2pbm;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RgbToGrayscaleByWeightConverterTest {
 
@@ -21,7 +19,8 @@ class RgbToGrayscaleByWeightConverterTest {
     void convertRgbToGrayscale(int r, int g, int b, int expectedResult) {
 
         // WHEN
-        int result = RgbToGrayscaleByWeightConverter.convertRgbToGrayscale(r, g, b);
+        RgbToGrayscaleByWeightConverter rgbToGrayscaleByWeightConverter = new RgbToGrayscaleByWeightConverter();
+        int result = rgbToGrayscaleByWeightConverter.convertRgbToGrayscale(r, g, b);
 
         // THEN
         assertThat(result).isEqualTo(expectedResult);

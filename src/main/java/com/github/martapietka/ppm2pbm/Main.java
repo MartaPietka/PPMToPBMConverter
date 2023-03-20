@@ -12,7 +12,19 @@ public class Main {
 
         try (InputStream inputStream = Files.newInputStream(inputPath);
         OutputStream outputStream = Files.newOutputStream(outputPath)) {
-            PpmToPgmConverter.convert(inputStream, outputStream);
+
+//            PpmToPgmConverterByAverage sepiaAverage = new PpmToPgmConverterByAverage();
+//            sepiaAverage.convert(inputStream, outputStream);
+
+//            PpmToPgmConverterByMax sepiaMax = new PpmToPgmConverterByMax();
+//            sepiaMax.convert(inputStream, outputStream);
+
+//            PpmToPgmConverterByWeight sepiaWeight = new PpmToPgmConverterByWeight();
+//            sepiaWeight.convert(inputStream, outputStream);
+
+//            PpmToPbmConverter sepiaBlackWhite = new PpmToPbmConverter();
+//            sepiaBlackWhite.convert(inputStream, outputStream);
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

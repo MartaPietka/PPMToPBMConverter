@@ -1,11 +1,9 @@
 package com.github.martapietka.ppm2pbm;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RgbToGrayscaleByAverageConverterTest {
 
@@ -21,7 +19,8 @@ class RgbToGrayscaleByAverageConverterTest {
     void convertRgbToGrayscale(int r, int g, int b, int expectedResult) {
 
         // WHEN
-        int result = RgbToGrayscaleByAverageConverter.convertRgbToGrayscale(r, g, b);
+        RgbToGrayscaleByAverageConverter rgbToGrayscaleByAverageConverter = new RgbToGrayscaleByAverageConverter();
+        int result = rgbToGrayscaleByAverageConverter.convertRgbToGrayscale(r, g, b);
 
         // THEN
         assertThat(result).isEqualTo(expectedResult);

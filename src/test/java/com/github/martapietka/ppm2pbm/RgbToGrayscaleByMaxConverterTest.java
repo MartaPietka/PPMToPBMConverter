@@ -18,7 +18,8 @@ public class RgbToGrayscaleByMaxConverterTest {
     void convertRgbToGrayscale(int r, int g, int b, int expectedResult) {
 
         // WHEN
-        int result = RgbToGrayscaleByMaxConverter.convertRgbToGrayscale(r, g, b);
+        RgbToGrayscaleByMaxConverter rgbToGrayscaleByMaxConverter = new RgbToGrayscaleByMaxConverter();
+        int result = rgbToGrayscaleByMaxConverter.convertRgbToGrayscale(r, g, b);
 
         // THEN
         assertThat(result).isEqualTo(expectedResult);
