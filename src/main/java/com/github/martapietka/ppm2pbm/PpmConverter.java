@@ -3,24 +3,21 @@ package com.github.martapietka.ppm2pbm;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 
 public abstract class PpmConverter {
 
     public final void convert(InputStream inputStream, OutputStream outputStream) throws IOException {
 
-        readBytes(inputStream);
-        printHeader(outputStream);
-        printWidthAndHeight(inputStream, outputStream);
-        printColourDepth(inputStream, outputStream);
-        printOutput(inputStream, outputStream);
+        Header header = readBytes(inputStream);
+        printOutput(inputStream, outputStream, header);
 
     }
 
-    public final void readBytes(InputStream inputStream) throws IOException {
-        byte[] header = inputStream.readNBytes(3);
+    public Header readBytes(InputStream inputStream) throws IOException {
 
-        if (!((header[0] == 0x50) && (header[1] == 0x36) && (header[2] <= 0x1F))) {
+        byte[] headerP = inputStream.readNBytes(3);
+
+        if (!((headerP[0] == 0x50) && (headerP[1] == 0x36) && (headerP[2] <= 0x1F))) {
             System.err.println("Invalid file format");
             System.exit(1);
         }
@@ -34,31 +31,16 @@ public abstract class PpmConverter {
         while (inputStream.read() > 0x1F) {
             // skip comment
         }
-    }
 
-    public abstract void printHeader(OutputStream outputStream) throws IOException;
-
-    public final void printWidthAndHeight(InputStream inputStream, OutputStream outputStream) throws IOException {
         int width = ByteReader.convertBytesToInt(inputStream);
         int height = ByteReader.convertBytesToInt(inputStream);
+        int colourDepth = ByteReader.convertBytesToInt(inputStream);
 
-        String widthString = Integer.toString(width);
-        byte[] widthBytes = widthString.getBytes(StandardCharsets.UTF_8);
-
-        String heightString = Integer.toString(height);
-        byte[] heightBytes = heightString.getBytes(StandardCharsets.UTF_8);
-
-        outputStream.write(widthBytes);
-        outputStream.write(0x20);
-        outputStream.write(heightBytes);
-        outputStream.write(0xA);
-    }
-
-    public void printColourDepth(InputStream inputStream, OutputStream outputStream) throws IOException {
-    }
-
-    public void printOutput(InputStream inputStream, OutputStream outputStream) throws IOException {
+        Header header = new Header(width, height, colourDepth);
+        return header;
 
     }
+
+    public abstract void printOutput(InputStream inputStream, OutputStream outputStream, Header header) throws IOException;
 
 }
