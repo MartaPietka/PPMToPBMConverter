@@ -2,7 +2,7 @@ package com.github.martapietka.ppm2pbm;
 
 import java.util.stream.IntStream;
 
-public class RgbToGrayscaleByMaxConverter implements Strategy {
+public class RgbToGrayscaleByMaxConverter implements RgbToGrayscaleConverter {
 
     @Override
     public int convertRgbToGrayscale(int r, int g, int b) {

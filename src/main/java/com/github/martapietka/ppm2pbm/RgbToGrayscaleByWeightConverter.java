@@ -1,6 +1,6 @@
 package com.github.martapietka.ppm2pbm;
 
-public class RgbToGrayscaleByWeightConverter implements Strategy {
+public class RgbToGrayscaleByWeightConverter implements RgbToGrayscaleConverter {
 
     @Override
     public int convertRgbToGrayscale(int r, int g, int b) {

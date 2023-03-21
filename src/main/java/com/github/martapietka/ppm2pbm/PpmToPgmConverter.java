@@ -7,6 +7,12 @@ import java.nio.charset.StandardCharsets;
 
 public class PpmToPgmConverter extends PpmConverter {
 
+    private final RgbToGrayscaleConverter rgbToGrayscaleConverter;
+
+    public PpmToPgmConverter(RgbToGrayscaleConverter rgbToGrayscaleConverter) {
+        this.rgbToGrayscaleConverter = rgbToGrayscaleConverter;
+    }
+
     @Override
     public void printHeader(OutputStream outputStream) throws IOException {
 
@@ -22,5 +28,19 @@ public class PpmToPgmConverter extends PpmConverter {
         byte[] grayscaleBytes = grayscaleString.getBytes(StandardCharsets.UTF_8);
         outputStream.write(grayscaleBytes);
         outputStream.write(0xA);
+    }
+
+    @Override
+    public void printOutput(InputStream inputStream, OutputStream outputStream) throws IOException {
+
+        byte[] rgbArray;
+        while ((rgbArray = inputStream.readNBytes(3)).length > 0) {
+            int r = Byte.toUnsignedInt(rgbArray[0]);
+            int g = Byte.toUnsignedInt(rgbArray[1]);
+            int b = Byte.toUnsignedInt(rgbArray[2]);
+
+            outputStream.write(rgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b));
+        }
+        outputStream.flush();
     }
 }
