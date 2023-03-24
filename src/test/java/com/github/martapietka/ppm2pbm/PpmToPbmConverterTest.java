@@ -21,7 +21,7 @@ class PpmToPbmConverterTest {
         // WHEN
         InputStream inputStream = PpmToPbmConverterTest.class.getResourceAsStream("/3x3.ppm");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PpmToPbmConverter ppmToPbmConverter = new PpmToPbmConverter(128);
+        PpmToPbmConverter ppmToPbmConverter = new PpmToPbmConverter(128, new RgbToGrayscaleByMaxConverter());
         ppmToPbmConverter.convert(inputStream, outputStream);
 
         // THEN

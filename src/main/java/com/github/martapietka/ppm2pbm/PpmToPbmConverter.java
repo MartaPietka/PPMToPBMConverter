@@ -6,9 +6,11 @@ import java.nio.charset.StandardCharsets;
 public class PpmToPbmConverter extends PpmConverter {
 
     private final int rgbToBlackWhiteConverter;
+    private final RgbToGrayscaleConverter rgbToGrayscaleConverter;
 
-    public PpmToPbmConverter(int rgbToBlackWhiteConverter) {
+    public PpmToPbmConverter(int rgbToBlackWhiteConverter, RgbToGrayscaleConverter rgbToGrayscaleConverter) {
         this.rgbToBlackWhiteConverter = rgbToBlackWhiteConverter;
+        this.rgbToGrayscaleConverter = rgbToGrayscaleConverter;
     }
 
 
@@ -38,7 +40,7 @@ public class PpmToPbmConverter extends PpmConverter {
             int r = Byte.toUnsignedInt(rgbArray[0]);
             int g = Byte.toUnsignedInt(rgbArray[1]);
             int b = Byte.toUnsignedInt(rgbArray[2]);
-            int blackWhite = RgbToBlackWhiteConverter.convertRgbToBlackWhite(r, g, b, rgbToBlackWhiteConverter);
+            int blackWhite = RgbToBlackWhiteConverter.convertRgbToBlackWhite(rgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b), rgbToBlackWhiteConverter);
             outputStream.write(blackWhite + 48);
 
             if (counter % width == 0) {
