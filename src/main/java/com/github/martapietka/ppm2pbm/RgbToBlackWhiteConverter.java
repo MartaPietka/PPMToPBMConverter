@@ -2,8 +2,8 @@ package com.github.martapietka.ppm2pbm;
 
 public class RgbToBlackWhiteConverter {
 
-    private int threshold;
-    private int rgbToGrayscaleConverter;
+    private final int threshold;
+    private final int rgbToGrayscaleConverter;
 
     public RgbToBlackWhiteConverter(int threshold, int rgbToGrayscaleConverter) {
         this.threshold = threshold;
