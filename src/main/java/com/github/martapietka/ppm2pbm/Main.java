@@ -13,19 +13,19 @@ public class Main {
         try (InputStream inputStream = Files.newInputStream(inputPath);
         OutputStream outputStream = Files.newOutputStream(outputPath)) {
 
-            if (args[2].equals("pgm") && args[3].equals("average")) {
-                PpmToPgmConverter ppmToPgmConverter = new PpmToPgmConverter(new RgbToGrayscaleByAverageConverter());
-                ppmToPgmConverter.convert(inputStream, outputStream);
-            } else if (args[2].equals("pgm") && args[3].equals("max")) {
-                PpmToPgmConverter ppmToPgmConverter = new PpmToPgmConverter(new RgbToGrayscaleByMaxConverter());
-                ppmToPgmConverter.convert(inputStream, outputStream);
-            } else if (args[2].equals("pgm") && args[3].equals("weight")) {
-                PpmToPgmConverter ppmToPgmConverter = new PpmToPgmConverter(new RgbToGrayscaleByWeightConverter());
-                ppmToPgmConverter.convert(inputStream, outputStream);
-            }
+//            if (args[2].equals("pgm") && args[3].equals("average")) {
+//                PpmToPgmConverter ppmToPgmConverter = new PpmToPgmConverter(new RgbToGrayscaleByAverageConverter());
+//                ppmToPgmConverter.convert(inputStream, outputStream);
+//            } else if (args[2].equals("pgm") && args[3].equals("max")) {
+//                PpmToPgmConverter ppmToPgmConverter = new PpmToPgmConverter(new RgbToGrayscaleByMaxConverter());
+//                ppmToPgmConverter.convert(inputStream, outputStream);
+//            } else if (args[2].equals("pgm") && args[3].equals("weight")) {
+//                PpmToPgmConverter ppmToPgmConverter = new PpmToPgmConverter(new RgbToGrayscaleByWeightConverter());
+//                ppmToPgmConverter.convert(inputStream, outputStream);
+//            }
 
-//            PpmToPbmConverter sepiaBlackWhite = new PpmToPbmConverter();
-//            sepiaBlackWhite.convert(inputStream, outputStream);
+            PpmToPbmConverter sepiaBlackWhite = new PpmToPbmConverter(Integer.valueOf(args[4]));
+            sepiaBlackWhite.convert(inputStream, outputStream);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());

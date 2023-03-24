@@ -2,7 +2,17 @@ package com.github.martapietka.ppm2pbm;
 
 public class RgbToBlackWhiteConverter {
 
-    public static int convertRgbToBlackWhite(int r, int g, int b) {
+    private int threshold;
+
+    public RgbToBlackWhiteConverter(int threshold) {
+        this.threshold = threshold;
+    }
+
+    public int getThreshold() {
+        return threshold;
+    }
+
+    public static int convertRgbToBlackWhite(int r, int g, int b, int threshold) {
 
         int[] rgbArray = {r, g, b};
         int v = rgbArray[0];
