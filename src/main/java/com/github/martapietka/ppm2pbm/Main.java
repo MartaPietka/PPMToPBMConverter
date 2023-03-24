@@ -13,11 +13,11 @@ public class Main {
         try (InputStream inputStream = Files.newInputStream(inputPath);
         OutputStream outputStream = Files.newOutputStream(outputPath)) {
 
-            PpmToPgmConverter ppmToPgmConverter = new PpmToPgmConverter(new RgbToGrayscaleByMaxConverter());
-            ppmToPgmConverter.convert(inputStream, outputStream);
+//            PpmToPgmConverter ppmToPgmConverter = new PpmToPgmConverter(new RgbToGrayscaleByMaxConverter());
+//            ppmToPgmConverter.convert(inputStream, outputStream);
 
-//            PpmToPbmConverter sepiaBlackWhite = new PpmToPbmConverter();
-//            sepiaBlackWhite.convert(inputStream, outputStream);
+            PpmToPbmConverter sepiaBlackWhite = new PpmToPbmConverter();
+            sepiaBlackWhite.convert(inputStream, outputStream);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());

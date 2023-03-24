@@ -34,7 +34,7 @@ public class PpmToPbmConverter extends PpmConverter {
             int blackWhite = RgbToBlackWhiteConverter.convertRgbToBlackWhite(r, g, b);
             outputStream.write(blackWhite + 48);
 
-            if (counter % 3 == 0) {
+            if (counter % width == 0) {
                 outputStream.write(0xA);
             } else {
                 outputStream.write(0x20);
