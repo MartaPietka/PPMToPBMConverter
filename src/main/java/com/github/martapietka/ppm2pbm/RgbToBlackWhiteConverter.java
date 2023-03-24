@@ -23,7 +23,7 @@ public class RgbToBlackWhiteConverter {
             }
         }
 
-        if (v >= 128) {
+        if (v >= threshold) {
             return 0;
         } else {
             return 1;
