@@ -5,11 +5,11 @@ import java.nio.charset.StandardCharsets;
 
 public class PpmToPbmConverter extends PpmConverter {
 
-    private final int rgbToBlackWhiteConverter;
+    private final int threshold;
     private final RgbToGrayscaleConverter rgbToGrayscaleConverter;
 
-    public PpmToPbmConverter(int rgbToBlackWhiteConverter, RgbToGrayscaleConverter rgbToGrayscaleConverter) {
-        this.rgbToBlackWhiteConverter = rgbToBlackWhiteConverter;
+    public PpmToPbmConverter(int threshold, RgbToGrayscaleConverter rgbToGrayscaleConverter) {
+        this.threshold = threshold;
         this.rgbToGrayscaleConverter = rgbToGrayscaleConverter;
     }
 
@@ -19,11 +19,11 @@ public class PpmToPbmConverter extends PpmConverter {
 
         byte[] p1Header = {0x50, 0x31, 0xA};
 
-        int width = header.getWidth();
+        int width = header.width();
         String widthString = Integer.toString(width);
         byte[] widthBytes = widthString.getBytes(StandardCharsets.UTF_8);
 
-        int height = header.getHeight();
+        int height = header.height();
         String heightString = Integer.toString(height);
         byte[] heightBytes = heightString.getBytes(StandardCharsets.UTF_8);
 
@@ -40,7 +40,7 @@ public class PpmToPbmConverter extends PpmConverter {
             int r = Byte.toUnsignedInt(rgbArray[0]);
             int g = Byte.toUnsignedInt(rgbArray[1]);
             int b = Byte.toUnsignedInt(rgbArray[2]);
-            int blackWhite = RgbToBlackWhiteConverter.convertRgbToBlackWhite(rgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b), rgbToBlackWhiteConverter);
+            int blackWhite = RgbToBlackWhiteConverter.convertRgbToBlackWhite(rgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b), threshold);
             outputStream.write(blackWhite + 48);
 
             if (counter % width == 0) {

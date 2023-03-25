@@ -18,11 +18,11 @@ public class PpmToPgmConverter extends PpmConverter {
 
         byte[] p5Header = {0x50, 0x35, 0xA};
 
-        int width = header.getWidth();
+        int width = header.width();
         String widthString = Integer.toString(width);
         byte[] widthBytes = widthString.getBytes(StandardCharsets.UTF_8);
 
-        int height = header.getHeight();
+        int height = header.height();
         String heightString = Integer.toString(height);
         byte[] heightBytes = heightString.getBytes(StandardCharsets.UTF_8);
 

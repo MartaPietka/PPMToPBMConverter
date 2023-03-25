@@ -8,12 +8,12 @@ public abstract class PpmConverter {
 
     public final void convert(InputStream inputStream, OutputStream outputStream) throws IOException {
 
-        Header header = readBytes(inputStream);
+        Header header = readHeader(inputStream);
         printOutput(inputStream, outputStream, header);
 
     }
 
-    public Header readBytes(InputStream inputStream) throws IOException {
+    public Header readHeader(InputStream inputStream) throws IOException {
 
         byte[] headerP = inputStream.readNBytes(3);
 
