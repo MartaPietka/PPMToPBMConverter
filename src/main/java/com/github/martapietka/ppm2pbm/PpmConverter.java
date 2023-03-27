@@ -36,8 +36,7 @@ public abstract class PpmConverter {
         int height = ByteReader.convertBytesToInt(inputStream);
         int colourDepth = ByteReader.convertBytesToInt(inputStream);
 
-        Header header = new Header(width, height, colourDepth);
-        return header;
+        return new Header(width, height, colourDepth);
 
     }
 
