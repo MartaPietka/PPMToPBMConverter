@@ -3,12 +3,15 @@ package com.github.martapietka.ppm2pbm;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 public abstract class PpmConverter {
 
     public final void convert(InputStream inputStream, OutputStream outputStream) throws IOException {
 
         Header header = readHeader(inputStream);
+        printHeader(outputStream);
+        printWidthAndHeight(outputStream, header);
         printOutput(inputStream, outputStream, header);
 
     }
@@ -38,6 +41,24 @@ public abstract class PpmConverter {
 
         return new Header(width, height, colourDepth);
 
+    }
+
+    public abstract void printHeader(OutputStream outputStream) throws IOException;
+
+    public void printWidthAndHeight(OutputStream outputStream, Header header) throws IOException {
+
+        int width = header.width();
+        String widthString = Integer.toString(width);
+        byte[] widthBytes = widthString.getBytes(StandardCharsets.UTF_8);
+
+        int height = header.height();
+        String heightString = Integer.toString(height);
+        byte[] heightBytes = heightString.getBytes(StandardCharsets.UTF_8);
+
+        outputStream.write(widthBytes);
+        outputStream.write(0x20);
+        outputStream.write(heightBytes);
+        outputStream.write(0xA);
     }
 
     public abstract void printOutput(InputStream inputStream, OutputStream outputStream, Header header) throws IOException;

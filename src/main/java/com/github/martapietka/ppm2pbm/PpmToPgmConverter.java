@@ -14,26 +14,17 @@ public class PpmToPgmConverter extends PpmConverter {
     }
 
     @Override
-    public void printOutput(InputStream inputStream, OutputStream outputStream, Header header) throws IOException {
-
+    public void printHeader (OutputStream outputStream) throws IOException {
         byte[] p5Header = {0x50, 0x35, 0xA};
+        outputStream.write(p5Header);
+    }
 
-        int width = header.width();
-        String widthString = Integer.toString(width);
-        byte[] widthBytes = widthString.getBytes(StandardCharsets.UTF_8);
-
-        int height = header.height();
-        String heightString = Integer.toString(height);
-        byte[] heightBytes = heightString.getBytes(StandardCharsets.UTF_8);
+    @Override
+    public void printOutput(InputStream inputStream, OutputStream outputStream, Header header) throws IOException {
 
         String colourDepthString = Integer.toString(255);
         byte[] colourDepthBytes = colourDepthString.getBytes(StandardCharsets.UTF_8);
 
-        outputStream.write(p5Header);
-        outputStream.write(widthBytes);
-        outputStream.write(0x20);
-        outputStream.write(heightBytes);
-        outputStream.write(0xA);
         outputStream.write(colourDepthBytes);
         outputStream.write(0xA);
 
