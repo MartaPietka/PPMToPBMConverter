@@ -2,13 +2,12 @@ package com.github.martapietka.ppm2pbm;
 
 public class RgbToBlackWhiteConverter {
 
-    public static int convertRgbToBlackWhite(int rgbToGrayscaleConverter, int threshold) {
+    public static BlackOrWhite convertRgbToBlackWhite(int rgbToGrayscaleConverter, int threshold) {
 
         if (rgbToGrayscaleConverter >= threshold) {
-            return 0;
+            return BlackOrWhite.WHITE;
         } else {
-            return 1;
+            return BlackOrWhite.BLACK;
         }
-
     }
 }
