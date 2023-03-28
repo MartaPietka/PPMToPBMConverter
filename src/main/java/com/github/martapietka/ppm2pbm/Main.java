@@ -10,46 +10,25 @@ public class Main {
         Path inputPath = Path.of(args[0]);
         Path outputPath = Path.of(args[1]);
 
-        RgbToGrayscaleByAverageConverter rgbToGrayscaleByAverageConverter = new RgbToGrayscaleByAverageConverter();
-        RgbToGrayscaleByMaxConverter rgbToGrayscaleByMaxConverter = new RgbToGrayscaleByMaxConverter();
-        RgbToGrayscaleByWeightConverter rgbToGrayscaleByWeightConverter = new RgbToGrayscaleByWeightConverter();
+        RgbToGrayscaleConverter rgbToGrayscaleConverter = switch (args[3]) {
+            case "average" -> new RgbToGrayscaleByAverageConverter();
+            case "max" -> new RgbToGrayscaleByMaxConverter();
+            default -> new RgbToGrayscaleByWeightConverter();
+        };
+
+        PpmConverter ppmConverter = switch (args[2]) {
+            case "pgm" -> new PpmToPgmConverter(rgbToGrayscaleConverter);
+            case "pbm" -> new PpmToPbmConverter(Integer.parseInt(args[4]), rgbToGrayscaleConverter);
+            default -> null;
+        };
 
         try (InputStream inputStream = Files.newInputStream(inputPath);
              OutputStream outputStream = Files.newOutputStream(outputPath)) {
 
-            if (args[2].equals("pgm")) {
-
-                PpmToPgmConverter ppmToPgmConverter;
-
-                if (args[3].equals("average")) {
-                    ppmToPgmConverter = new PpmToPgmConverter(rgbToGrayscaleByAverageConverter);
-                } else if (args[3].equals("max")) {
-                    ppmToPgmConverter = new PpmToPgmConverter(rgbToGrayscaleByMaxConverter);
-                } else {
-                    ppmToPgmConverter = new PpmToPgmConverter(rgbToGrayscaleByWeightConverter);
-                }
-
-                ppmToPgmConverter.convert(inputStream, outputStream);
-
-            } else if (args[2].equals("pbm")) {
-
-                PpmToPbmConverter ppmToPbmConverter;
-
-                if (args[3].equals("average")) {
-                    ppmToPbmConverter = new PpmToPbmConverter(Integer.parseInt(args[4]), rgbToGrayscaleByAverageConverter);
-                } else if (args[3].equals("max")) {
-                    ppmToPbmConverter = new PpmToPbmConverter(Integer.parseInt(args[4]), rgbToGrayscaleByMaxConverter);
-                } else {
-                    ppmToPbmConverter = new PpmToPbmConverter(Integer.parseInt(args[4]), rgbToGrayscaleByWeightConverter);
-                }
-
-                ppmToPbmConverter.convert(inputStream, outputStream);
-
-            }
+            ppmConverter.convert(inputStream, outputStream);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
-
 }
