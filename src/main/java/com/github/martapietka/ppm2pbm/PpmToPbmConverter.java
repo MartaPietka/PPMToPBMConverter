@@ -30,11 +30,12 @@ public class PpmToPbmConverter extends PpmConverter {
             int b = Byte.toUnsignedInt(rgbArray[2]);
 
             BlackOrWhite blackWhite = RgbToBlackWhiteConverter.convertRgbToBlackWhite(rgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b), threshold);
-            if (blackWhite == BlackOrWhite.WHITE) {
-                outputStream.write(0x30);
-            } else if (blackWhite == BlackOrWhite.BLACK) {
-                outputStream.write(0x31);
-            }
+
+            int byteValue = switch (blackWhite) {
+                case WHITE -> 0x30;
+                case BLACK -> 0x31;
+            };
+            outputStream.write(byteValue);
 
             if (counter % header.width() == 0) {
                 outputStream.write(0xA);
