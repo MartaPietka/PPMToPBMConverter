@@ -7,13 +7,28 @@ import java.nio.file.Path;
 public class Main {
     public static void main(String[] args) {
 
-        Path path = Path.of(args[0]);
+        Path inputPath = Path.of(args[0]);
+        Path outputPath = Path.of(args[1]);
 
-        try (InputStream inputStream = Files.newInputStream(path)) {
-            PpmToPbmConverter.convert(inputStream, System.out);
+        RgbToGrayscaleConverter rgbToGrayscaleConverter = switch (args[3]) {
+            case "average" -> new RgbToGrayscaleByAverageConverter();
+            case "max" -> new RgbToGrayscaleByMaxConverter();
+            default -> new RgbToGrayscaleByWeightConverter();
+        };
+
+        PpmConverter ppmConverter = switch (args[2]) {
+            case "pgm" -> new PpmToPgmConverter(rgbToGrayscaleConverter);
+            case "pbm" -> new PpmToPbmConverter(Integer.parseInt(args[4]), rgbToGrayscaleConverter);
+            default -> null;
+        };
+
+        try (InputStream inputStream = Files.newInputStream(inputPath);
+             OutputStream outputStream = Files.newOutputStream(outputPath)) {
+
+            ppmConverter.convert(inputStream, outputStream);
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
     }
 }

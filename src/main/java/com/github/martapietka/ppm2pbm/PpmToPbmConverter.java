@@ -1,43 +1,42 @@
 package com.github.martapietka.ppm2pbm;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 
-public class PpmToPbmConverter {
+public class PpmToPbmConverter extends PpmConverter {
 
-    public static void convert(InputStream inputStream, OutputStream outputStream) throws IOException {
+    private final int threshold;
+    private final RgbToGrayscaleConverter rgbToGrayscaleConverter;
+    private Header header;
+    private int counter = 1;
 
-        byte[] header = inputStream.readNBytes(3);
+    public PpmToPbmConverter(int threshold, RgbToGrayscaleConverter rgbToGrayscaleConverter) {
+        this.threshold = threshold;
+        this.rgbToGrayscaleConverter = rgbToGrayscaleConverter;
+    }
 
-        if (!((header[0] == 0x50) && (header[1] == 0x36) && (header[2] <= 0x1F))) {
-            System.err.println("Invalid file format");
-            System.exit(1);
-        }
-
-        int commentStart = inputStream.read();
-        if (commentStart != 0x23) {
-            System.err.println("Missing comment");
-            System.exit(1);
-        }
-
-        while (inputStream.read() > 0x1F) {
-            // skip comment
-        }
-
-        byte[] p1Header = {0x50, 0x31, 0x20, 0xA};
-
-        int width = ByteReader.convertBytesToInt(inputStream);
-        int height = ByteReader.convertBytesToInt(inputStream);
-
-        String widthString = Integer.toString(width);
-        byte[] widthBytes = widthString.getBytes(StandardCharsets.UTF_8);
-
-        String heightString = Integer.toString(height);
-        byte[] heightBytes = heightString.getBytes(StandardCharsets.UTF_8);
-
+    @Override
+    public void printHeader (OutputStream outputStream) throws IOException {
+        byte[] p1Header = {0x50, 0x31, 0xA};
         outputStream.write(p1Header);
-        outputStream.write(widthBytes);
-        outputStream.write(0x20);
-        outputStream.write(heightBytes);
+    }
+
+    @Override
+    protected void printWidthAndHeight(OutputStream outputStream, Header header) throws IOException {
+        super.printWidthAndHeight(outputStream, header);
+        this.header = header;
+    }
+
+    @Override
+    protected byte[] convertRgbToBytes(int r, int g, int b) {
+
+        BlackOrWhite blackWhite = RgbToBlackWhiteConverter.convertRgbToBlackWhite(rgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b), threshold);
+
+        byte byteValue = switch (blackWhite) {
+            case WHITE -> 0x30;
+            case BLACK -> 0x31;
+        };
+
+        byte separatorValue = (byte) ((counter++ % header.width() == 0) ? 0xA : 0x20);
+        return new byte[]{byteValue, separatorValue};
     }
 }
