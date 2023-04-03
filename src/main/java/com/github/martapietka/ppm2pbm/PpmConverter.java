@@ -16,7 +16,7 @@ public abstract class PpmConverter {
 
     }
 
-    public Header readHeader(InputStream inputStream) throws IOException {
+    private Header readHeader(InputStream inputStream) throws IOException {
 
         byte[] headerP = inputStream.readNBytes(3);
 
@@ -43,9 +43,9 @@ public abstract class PpmConverter {
 
     }
 
-    public abstract void printHeader(OutputStream outputStream) throws IOException;
+    protected abstract void printHeader(OutputStream outputStream) throws IOException;
 
-    public void printWidthAndHeight(OutputStream outputStream, Header header) throws IOException {
+    protected void printWidthAndHeight(OutputStream outputStream, Header header) throws IOException {
 
         int width = header.width();
         String widthString = Integer.toString(width);
@@ -61,6 +61,21 @@ public abstract class PpmConverter {
         outputStream.write(0xA);
     }
 
-    public abstract void printOutput(InputStream inputStream, OutputStream outputStream, Header header) throws IOException;
+    private void printOutput(InputStream inputStream, OutputStream outputStream, Header header) throws IOException {
+
+        byte[] rgbArray;
+
+        while ((rgbArray = inputStream.readNBytes(3)).length > 0) {
+            int r = Byte.toUnsignedInt(rgbArray[0]);
+            int g = Byte.toUnsignedInt(rgbArray[1]);
+            int b = Byte.toUnsignedInt(rgbArray[2]);
+
+            byte[] bytes = convertRgbToBytes(r, g, b);
+            outputStream.write(bytes);
+        }
+        outputStream.flush();
+    }
+
+    protected abstract byte[] convertRgbToBytes (int r, int g, int b);
 
 }

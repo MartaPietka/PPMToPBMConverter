@@ -14,28 +14,28 @@ public class PpmToPgmConverter extends PpmConverter {
     }
 
     @Override
-    public void printHeader (OutputStream outputStream) throws IOException {
+    public void printHeader(OutputStream outputStream) throws IOException {
         byte[] p5Header = {0x50, 0x35, 0xA};
         outputStream.write(p5Header);
     }
 
     @Override
-    public void printOutput(InputStream inputStream, OutputStream outputStream, Header header) throws IOException {
+    protected void printWidthAndHeight(OutputStream outputStream, Header header) throws IOException {
+
+        super.printWidthAndHeight(outputStream, header);
 
         String colourDepthString = Integer.toString(255);
         byte[] colourDepthBytes = colourDepthString.getBytes(StandardCharsets.UTF_8);
 
         outputStream.write(colourDepthBytes);
         outputStream.write(0xA);
+    }
 
-        byte[] rgbArray;
-        while ((rgbArray = inputStream.readNBytes(3)).length > 0) {
-            int r = Byte.toUnsignedInt(rgbArray[0]);
-            int g = Byte.toUnsignedInt(rgbArray[1]);
-            int b = Byte.toUnsignedInt(rgbArray[2]);
+    @Override
+    protected byte[] convertRgbToBytes(int r, int g, int b) {
 
-            outputStream.write(rgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b));
-        }
-        outputStream.flush();
+        int grayscaleValue = rgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b);
+
+        return new byte[]{(byte) grayscaleValue};
     }
 }

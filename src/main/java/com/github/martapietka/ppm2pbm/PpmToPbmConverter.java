@@ -6,6 +6,8 @@ public class PpmToPbmConverter extends PpmConverter {
 
     private final int threshold;
     private final RgbToGrayscaleConverter rgbToGrayscaleConverter;
+    private Header header;
+    private int counter = 1;
 
     public PpmToPbmConverter(int threshold, RgbToGrayscaleConverter rgbToGrayscaleConverter) {
         this.threshold = threshold;
@@ -19,31 +21,22 @@ public class PpmToPbmConverter extends PpmConverter {
     }
 
     @Override
-    public void printOutput(InputStream inputStream, OutputStream outputStream, Header header) throws IOException {
+    protected void printWidthAndHeight(OutputStream outputStream, Header header) throws IOException {
+        super.printWidthAndHeight(outputStream, header);
+        this.header = header;
+    }
 
-        byte[] rgbArray;
-        int counter = 1;
+    @Override
+    protected byte[] convertRgbToBytes(int r, int g, int b) {
 
-        while ((rgbArray = inputStream.readNBytes(3)).length > 0) {
-            int r = Byte.toUnsignedInt(rgbArray[0]);
-            int g = Byte.toUnsignedInt(rgbArray[1]);
-            int b = Byte.toUnsignedInt(rgbArray[2]);
+        BlackOrWhite blackWhite = RgbToBlackWhiteConverter.convertRgbToBlackWhite(rgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b), threshold);
 
-            BlackOrWhite blackWhite = RgbToBlackWhiteConverter.convertRgbToBlackWhite(rgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b), threshold);
+        byte byteValue = switch (blackWhite) {
+            case WHITE -> 0x30;
+            case BLACK -> 0x31;
+        };
 
-            int byteValue = switch (blackWhite) {
-                case WHITE -> 0x30;
-                case BLACK -> 0x31;
-            };
-            outputStream.write(byteValue);
-
-            if (counter % header.width() == 0) {
-                outputStream.write(0xA);
-            } else {
-                outputStream.write(0x20);
-            }
-            counter++;
-        }
-        outputStream.flush();
+        byte separatorValue = (byte) ((counter++ % header.width() == 0) ? 0xA : 0x20);
+        return new byte[]{byteValue, separatorValue};
     }
 }
