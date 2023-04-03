@@ -1,13 +1,19 @@
 package com.github.martapietka.ppm2pbm;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RgbToGrayscaleByAverageConverterTest {
+
+    private RgbToGrayscaleConverter rgbToGrayscaleConverter;
+
+    @BeforeEach
+    void setUp() {
+        this.rgbToGrayscaleConverter = new RgbToGrayscaleByAverageConverter();
+    }
 
     @ParameterizedTest(name = "r: {0}, g: {1}, b: {2} -> {3}")
     @CsvSource(textBlock = """
@@ -21,7 +27,7 @@ class RgbToGrayscaleByAverageConverterTest {
     void convertRgbToGrayscale(int r, int g, int b, int expectedResult) {
 
         // WHEN
-        int result = RgbToGrayscaleByAverageConverter.convertRgbToGrayscale(r, g, b);
+        int result = rgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b);
 
         // THEN
         assertThat(result).isEqualTo(expectedResult);

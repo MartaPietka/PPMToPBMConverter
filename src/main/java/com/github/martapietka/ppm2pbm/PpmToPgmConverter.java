@@ -5,58 +5,37 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-public class PpmToPgmConverter {
+public class PpmToPgmConverter extends PpmConverter {
 
-    public static void convert(InputStream inputStream, OutputStream outputStream) throws IOException {
+    private final RgbToGrayscaleConverter rgbToGrayscaleConverter;
 
-        byte[] header = inputStream.readNBytes(3);
+    public PpmToPgmConverter(RgbToGrayscaleConverter rgbToGrayscaleConverter) {
+        this.rgbToGrayscaleConverter = rgbToGrayscaleConverter;
+    }
 
-        if (!((header[0] == 0x50) && (header[1] == 0x36) && (header[2] <= 0x1F))) {
-            System.err.println("Invalid file format");
-            System.exit(1);
-        }
-
-        int commentStart = inputStream.read();
-        if (commentStart != 0x23) {
-            System.err.println("Missing comment");
-            System.exit(1);
-        }
-
-        while (inputStream.read() > 0x1F) {
-            // skip comment
-        }
-
+    @Override
+    public void printHeader(OutputStream outputStream) throws IOException {
         byte[] p5Header = {0x50, 0x35, 0xA};
-
-        int width = ByteReader.convertBytesToInt(inputStream);
-        int height = ByteReader.convertBytesToInt(inputStream);
-        int colourDepth = ByteReader.convertBytesToInt(inputStream);
-
-        String widthString = Integer.toString(width);
-        byte[] widthBytes = widthString.getBytes(StandardCharsets.UTF_8);
-
-        String heightString = Integer.toString(height);
-        byte[] heightBytes = heightString.getBytes(StandardCharsets.UTF_8);
-
-        String grayscaleString = Integer.toString(255);
-        byte[] grayscaleBytes = grayscaleString.getBytes(StandardCharsets.UTF_8);
-
         outputStream.write(p5Header);
-        outputStream.write(widthBytes);
-        outputStream.write(0x20);
-        outputStream.write(heightBytes);
-        outputStream.write(0xA);
-        outputStream.write(grayscaleBytes);
-        outputStream.write(0xA);
+    }
 
-        byte[] rgbArray;
-        while ((rgbArray = inputStream.readNBytes(3)).length > 0) {
-            int r = Byte.toUnsignedInt(rgbArray[0]);
-            int g = Byte.toUnsignedInt(rgbArray[1]);
-            int b = Byte.toUnsignedInt(rgbArray[2]);
-            int grayscale = RgbToGrayscaleByWeightConverter.convertRgbToGrayscale(r, g, b);
-            outputStream.write(grayscale);
-        }
-        outputStream.flush();
+    @Override
+    protected void printWidthAndHeight(OutputStream outputStream, Header header) throws IOException {
+
+        super.printWidthAndHeight(outputStream, header);
+
+        String colourDepthString = Integer.toString(255);
+        byte[] colourDepthBytes = colourDepthString.getBytes(StandardCharsets.UTF_8);
+
+        outputStream.write(colourDepthBytes);
+        outputStream.write(0xA);
+    }
+
+    @Override
+    protected byte[] convertRgbToBytes(int r, int g, int b) {
+
+        int grayscaleValue = rgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b);
+
+        return new byte[]{(byte) grayscaleValue};
     }
 }

@@ -1,13 +1,9 @@
 package com.github.martapietka.ppm2pbm;
 
-import java.util.stream.IntStream;
+public class RgbToGrayscaleByWeightConverter implements RgbToGrayscaleConverter {
 
-public class RgbToGrayscaleByWeightConverter {
-
-    public static int convertRgbToGrayscale(double r, double g, double b) {
-
-//        double sum = 0.299*r + 0.587*g + 0.114*b;
-//        int v = (int) Math.round(sum);
+    @Override
+    public int convertRgbToGrayscale(int r, int g, int b) {
 
         return (int) Math.round(0.299*r + 0.587*g + 0.114*b);
 
