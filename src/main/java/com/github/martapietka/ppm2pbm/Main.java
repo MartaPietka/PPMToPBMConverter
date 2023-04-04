@@ -10,17 +10,20 @@ public class Main {
         Path inputPath = Path.of(args[0]);
         Path outputPath = Path.of(args[1]);
 
-        RgbToGrayscaleConverter rgbToGrayscaleConverter = switch (args[3]) {
-            case "average" -> new RgbToGrayscaleByAverageConverter();
-            case "max" -> new RgbToGrayscaleByMaxConverter();
-            default -> new RgbToGrayscaleByWeightConverter();
-        };
+        RgbToGrayscaleConverter rgbToGrayscaleConverter = RgbToGrayscaleByWeightConverter.getInstance();
+
+        if (args.length > 3) {
+            rgbToGrayscaleConverter = switch (args[3]) {
+                case "average" -> new RgbToGrayscaleByAverageConverter();
+                case "max" -> new RgbToGrayscaleByMaxConverter();
+                default -> RgbToGrayscaleByWeightConverter.getInstance();
+            };
+        }
 
         PpmConverter ppmConverter = switch (args[2]) {
             case "pgm" -> new PpmToPgmConverter(rgbToGrayscaleConverter);
             case "pbm" -> new PpmToPbmConverter(Integer.parseInt(args[4]), rgbToGrayscaleConverter);
-            case "ppm" -> new PpmToPpmConverter();
-            default -> null;
+            default -> new PpmToPpmConverter();
         };
 
         try (InputStream inputStream = Files.newInputStream(inputPath);
