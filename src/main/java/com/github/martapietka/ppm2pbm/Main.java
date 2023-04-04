@@ -19,6 +19,7 @@ public class Main {
         PpmConverter ppmConverter = switch (args[2]) {
             case "pgm" -> new PpmToPgmConverter(rgbToGrayscaleConverter);
             case "pbm" -> new PpmToPbmConverter(Integer.parseInt(args[4]), rgbToGrayscaleConverter);
+            case "ppm" -> new PpmToPpmConverter();
             default -> null;
         };
 
