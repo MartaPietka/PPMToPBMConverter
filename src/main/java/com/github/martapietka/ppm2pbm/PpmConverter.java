@@ -10,10 +10,8 @@ public abstract class PpmConverter {
     public final void convert(InputStream inputStream, OutputStream outputStream) throws IOException {
 
         Header header = readHeader(inputStream);
-        printHeader(outputStream);
-        printWidthAndHeight(outputStream, header);
-        printOutput(inputStream, outputStream, header);
-
+        printHeader(outputStream, header);
+        printOutput(inputStream, outputStream);
     }
 
     private Header readHeader(InputStream inputStream) throws IOException {
@@ -22,7 +20,7 @@ public abstract class PpmConverter {
 
         if (!((headerP[0] == 0x50) && (headerP[1] == 0x36) && (headerP[2] <= 0x1F))) {
             System.err.println("Invalid file format");
-            System.exit(1);
+            // throw InvalidImageException "Invalid file format"
         }
 
         int commentStart = inputStream.read();
@@ -40,12 +38,9 @@ public abstract class PpmConverter {
         int colourDepth = ByteReader.convertBytesToInt(inputStream);
 
         return new Header(width, height, colourDepth);
-
     }
 
-    protected abstract void printHeader(OutputStream outputStream) throws IOException;
-
-    protected void printWidthAndHeight(OutputStream outputStream, Header header) throws IOException {
+    protected void printHeader(OutputStream outputStream, Header header) throws IOException {
 
         int width = header.width();
         String widthString = Integer.toString(width);
@@ -55,13 +50,14 @@ public abstract class PpmConverter {
         String heightString = Integer.toString(height);
         byte[] heightBytes = heightString.getBytes(StandardCharsets.UTF_8);
 
+        outputStream.write(pHeader());
         outputStream.write(widthBytes);
         outputStream.write(0x20);
         outputStream.write(heightBytes);
         outputStream.write(0xA);
     }
 
-    private void printOutput(InputStream inputStream, OutputStream outputStream, Header header) throws IOException {
+    private void printOutput(InputStream inputStream, OutputStream outputStream) throws IOException {
 
         byte[] rgbArray;
 
@@ -76,6 +72,7 @@ public abstract class PpmConverter {
         outputStream.flush();
     }
 
-    protected abstract byte[] convertRgbToBytes (int r, int g, int b);
+    protected abstract byte[] pHeader();
+    protected abstract byte[] convertRgbToBytes(int r, int g, int b);
 
 }

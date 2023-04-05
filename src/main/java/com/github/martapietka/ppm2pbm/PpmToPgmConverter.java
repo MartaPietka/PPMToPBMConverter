@@ -1,7 +1,6 @@
 package com.github.martapietka.ppm2pbm;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
@@ -14,15 +13,14 @@ public class PpmToPgmConverter extends PpmConverter {
     }
 
     @Override
-    public void printHeader(OutputStream outputStream) throws IOException {
-        byte[] p5Header = {0x50, 0x35, 0xA};
-        outputStream.write(p5Header);
+    protected byte[] pHeader() {
+        return new byte[]{0x50, 0x35, 0xA};
     }
 
     @Override
-    protected void printWidthAndHeight(OutputStream outputStream, Header header) throws IOException {
+    protected void printHeader(OutputStream outputStream, Header header) throws IOException {
 
-        super.printWidthAndHeight(outputStream, header);
+        super.printHeader(outputStream, header);
 
         String colourDepthString = Integer.toString(255);
         byte[] colourDepthBytes = colourDepthString.getBytes(StandardCharsets.UTF_8);

@@ -14,16 +14,6 @@ class RgbToNegativeConverterTest {
         this.rgbToNegativeConverter = new RgbToNegativeConverter();
     }
 
-//    @ParameterizedTest(name = "r: {0}, g: {1}, b: {2} -> {3}")
-//    @CsvSource(textBlock = """
-//            # red  green  blue  expected result
-//              102, 235,   125,  {-103, 20, -126}
-//              255, 255,   255,  {0, 0, 0}
-//              0,   0,     0,    {255, 255, 255}
-//              128, 128,   128,  {127, 127, 127}
-//              115, 40,    60,   {-116, -41, -61}
-//            """)
-
     @Test
     void convertRgbToNegative() {
 

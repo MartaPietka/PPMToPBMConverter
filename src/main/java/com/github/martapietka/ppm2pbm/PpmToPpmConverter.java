@@ -9,15 +9,14 @@ public class PpmToPpmConverter extends PpmConverter {
     RgbToNegativeConverter rgbToNegativeConverter = new RgbToNegativeConverter();
 
     @Override
-    protected void printHeader(OutputStream outputStream) throws IOException {
-        byte[] p6Header = {0x50, 0x36, 0xA};
-        outputStream.write(p6Header);
+    protected byte[] pHeader() {
+        return new byte[]{0x50, 0x36, 0xA};
     }
 
     @Override
-    protected void printWidthAndHeight(OutputStream outputStream, Header header) throws IOException {
+    protected void printHeader(OutputStream outputStream, Header header) throws IOException {
 
-        super.printWidthAndHeight(outputStream, header);
+        super.printHeader(outputStream, header);
 
         String colourDepthString = Integer.toString(255);
         byte[] colourDepthBytes = colourDepthString.getBytes(StandardCharsets.UTF_8);

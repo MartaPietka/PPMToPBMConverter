@@ -15,14 +15,13 @@ public class PpmToPbmConverter extends PpmConverter {
     }
 
     @Override
-    public void printHeader (OutputStream outputStream) throws IOException {
-        byte[] p1Header = {0x50, 0x31, 0xA};
-        outputStream.write(p1Header);
+    protected byte[] pHeader() {
+        return new byte[]{0x50, 0x31, 0xA};
     }
 
     @Override
-    protected void printWidthAndHeight(OutputStream outputStream, Header header) throws IOException {
-        super.printWidthAndHeight(outputStream, header);
+    protected void printHeader(OutputStream outputStream, Header header) throws IOException {
+        super.printHeader(outputStream, header);
         this.header = header;
     }
 

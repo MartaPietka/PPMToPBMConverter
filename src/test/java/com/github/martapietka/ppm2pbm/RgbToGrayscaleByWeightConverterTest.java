@@ -12,7 +12,7 @@ class RgbToGrayscaleByWeightConverterTest {
 
     @BeforeEach
     void setUp() {
-        this.rgbToGrayscaleConverter = new RgbToGrayscaleByWeightConverter();
+        this.rgbToGrayscaleConverter = RgbToGrayscaleByWeightConverter.getInstance();
     }
 
     @ParameterizedTest(name = "r: {0}, g: {1}, b: {2} -> {3}")
