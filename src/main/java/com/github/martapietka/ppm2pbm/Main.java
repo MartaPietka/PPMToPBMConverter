@@ -33,6 +33,8 @@ public class Main {
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        } catch (InvalidImageException e) {
+            System.out.println("Invalid image: " + e.getMessage());
         }
     }
 }

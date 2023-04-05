@@ -7,26 +7,24 @@ import java.nio.charset.StandardCharsets;
 
 public abstract class PpmConverter {
 
-    public final void convert(InputStream inputStream, OutputStream outputStream) throws IOException {
+    public final void convert(InputStream inputStream, OutputStream outputStream) throws IOException, InvalidImageException {
 
         Header header = readHeader(inputStream);
         printHeader(outputStream, header);
         printOutput(inputStream, outputStream);
     }
 
-    private Header readHeader(InputStream inputStream) throws IOException {
+    private Header readHeader(InputStream inputStream) throws IOException, InvalidImageException {
 
         byte[] headerP = inputStream.readNBytes(3);
 
         if (!((headerP[0] == 0x50) && (headerP[1] == 0x36) && (headerP[2] <= 0x1F))) {
-            System.err.println("Invalid file format");
-            // throw InvalidImageException "Invalid file format"
+            throw new InvalidImageException("Invalid file format");
         }
 
         int commentStart = inputStream.read();
         if (commentStart != 0x23) {
-            System.err.println("Missing comment");
-            System.exit(1);
+            throw new InvalidImageException("Missing comment");
         }
 
         while (inputStream.read() > 0x1F) {
@@ -73,6 +71,7 @@ public abstract class PpmConverter {
     }
 
     protected abstract byte[] pHeader();
+
     protected abstract byte[] convertRgbToBytes(int r, int g, int b);
 
 }
