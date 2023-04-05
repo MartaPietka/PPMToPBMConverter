@@ -4,17 +4,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-public class PpmToPgmConverter extends PpmConverter {
+public class PpmToPpmConverter extends PpmConverter {
 
-    private final RgbToGrayscaleConverter rgbToGrayscaleConverter;
-
-    public PpmToPgmConverter(RgbToGrayscaleConverter rgbToGrayscaleConverter) {
-        this.rgbToGrayscaleConverter = rgbToGrayscaleConverter;
-    }
+    RgbToNegativeConverter rgbToNegativeConverter = new RgbToNegativeConverter();
 
     @Override
     protected byte[] pHeader() {
-        return new byte[]{0x50, 0x35, 0xA};
+        return new byte[]{0x50, 0x36, 0xA};
     }
 
     @Override
@@ -32,8 +28,6 @@ public class PpmToPgmConverter extends PpmConverter {
     @Override
     protected byte[] convertRgbToBytes(int r, int g, int b) {
 
-        int grayscaleValue = rgbToGrayscaleConverter.convertRgbToGrayscale(r, g, b);
-
-        return new byte[]{(byte) grayscaleValue};
+        return rgbToNegativeConverter.convertRgbToNegative(r, g, b);
     }
 }

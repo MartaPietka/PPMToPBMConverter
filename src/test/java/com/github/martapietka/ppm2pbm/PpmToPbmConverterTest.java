@@ -17,7 +17,7 @@ class PpmToPbmConverterTest {
         this.ppmToPbmConverter = new PpmToPbmConverter(128, new RgbToGrayscaleByMaxConverter());
     }
     @Test
-    void convert() throws IOException {
+    void convert() throws IOException, InvalidImageException {
         String expectedOutputString = """
                 P1
                 3 3
