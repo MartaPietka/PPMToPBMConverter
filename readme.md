@@ -19,9 +19,9 @@ This is a Java project that provides utilities to convert images in PPM format t
 Converts PPM images to PBM (black-and-white) images:
 
 In terminal put the following statement
-'''
+```
 java -jar ppm2pbm-jar.jar "put_the_input_path_of_your_image_here" "put_the_output_path_of_your_image_with_appropriate_extension(pbm_pgm_ppm)" pbm weight 128
-'''
+```
 
 <img width="1409" alt="Screenshot 2023-04-07 at 12 49 48" src="https://user-images.githubusercontent.com/125610011/230597963-25793734-be6a-41d9-91f8-21ddd053d854.png">
 
@@ -30,9 +30,9 @@ java -jar ppm2pbm-jar.jar "put_the_input_path_of_your_image_here" "put_the_outpu
 Converts PPM images to PGM (grayscale) images:
 
 In terminal put the following statement
-'''
+```
 java -jar ppm2pbm-jar.jar "put_the_input_path_of_your_image_here" "put_the_output_path_of_your_image_with_appropriate_extension(pbm_pgm_ppm)" pgm weight
-'''
+```
 
 <img width="1411" alt="Screenshot 2023-04-07 at 12 51 49" src="https://user-images.githubusercontent.com/125610011/230598925-3886279e-9098-468d-86b4-dec9eef0c8c3.png">
 
@@ -41,9 +41,9 @@ java -jar ppm2pbm-jar.jar "put_the_input_path_of_your_image_here" "put_the_outpu
 Converts PPM images to negative PPM images:
 
 In terminal put the following statement
-'''
+```
 java -jar ppm2pbm-jar.jar "put_the_input_path_of_your_image_here" "put_the_output_path_of_your_image_with_appropriate_extension(pbm_pgm_ppm)" ppm
-'''
+```
 
 <img width="1412" alt="Screenshot 2023-04-07 at 12 52 20" src="https://user-images.githubusercontent.com/125610011/230599007-bfc8746a-3f71-4cb2-ab89-b05323ad890e.png">
 
@@ -55,14 +55,14 @@ java -jar ppm2pbm-jar.jar "put_the_input_path_of_your_image_here" "put_the_outpu
 Converts RGB values to grayscale by taking the average of the red, green, and blue values:
 
 In terminal put the following statement for grayscale image
-'''
+```
 java -jar ppm2pbm-jar.jar "put_the_input_path_of_your_image_here" "put_the_output_path_of_your_image_with_appropriate_extension(pbm_pgm_ppm)" pgm average
-'''
+```
 
 For black-and-white image
-'''
+```
 java -jar ppm2pbm-jar.jar "put_the_input_path_of_your_image_here" "put_the_output_path_of_your_image_with_appropriate_extension(pbm_pgm_ppm)" pbm average 128
-'''
+```
 
 <img width="1411" alt="Average" src="https://user-images.githubusercontent.com/125610011/230599125-38cd600a-ee49-48d9-b6b1-4707ccd51b04.png">
 
@@ -71,14 +71,14 @@ java -jar ppm2pbm-jar.jar "put_the_input_path_of_your_image_here" "put_the_outpu
 Converts RGB values to grayscale by taking the maximum value of the red, green, and blue values:
 
 In terminal put the following statement for grayscale image
-'''
+```
 java -jar ppm2pbm-jar.jar "put_the_input_path_of_your_image_here" "put_the_output_path_of_your_image_with_appropriate_extension(pbm_pgm_ppm)" pgm max
-'''
+```
 
 For black-and-white image
-'''
+```
 java -jar ppm2pbm-jar.jar "put_the_input_path_of_your_image_here" "put_the_output_path_of_your_image_with_appropriate_extension(pbm_pgm_ppm)" pbm max 128
-'''
+```
 
 <img width="1412" alt="Max" src="https://user-images.githubusercontent.com/125610011/230599180-53ac9885-6d26-40a0-9fa1-777809030e5a.png">
 
@@ -87,14 +87,14 @@ java -jar ppm2pbm-jar.jar "put_the_input_path_of_your_image_here" "put_the_outpu
 Converts RGB values to grayscale using a weighted sum of the red, green, and blue values:
 
 In terminal put the following statement for grayscale image
-'''
+```
 java -jar ppm2pbm-jar.jar "put_the_input_path_of_your_image_here" "put_the_output_path_of_your_image_with_appropriate_extension(pbm_pgm_ppm)" pgm weight
-'''
+```
 
 For black-and-white image
-'''
+```
 java -jar ppm2pbm-jar.jar "put_the_input_path_of_your_image_here" "put_the_output_path_of_your_image_with_appropriate_extension(pbm_pgm_ppm)" pbm weight 128
-'''
+```
 
 <img width="1414" alt="Weight" src="https://user-images.githubusercontent.com/125610011/230599229-3139afbf-065e-40fd-8087-ee44b23a5355.png">
 
