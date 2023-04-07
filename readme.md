@@ -68,11 +68,11 @@ The left image was generated for the threshold value of 128, while the right one
 
 ## Dependencies
 
-*This project uses the following dependencies:*
+**This project uses the following dependencies:**
 
-JUnit Jupiter API (version 5.9.2) for unit testing
-JUnit Jupiter Params (version 5.9.2) for parameterized testing
-AssertJ Core (version 3.24.2) for assertion testing
+* JUnit Jupiter API (version 5.9.2) for unit testing
+* JUnit Jupiter Params (version 5.9.2) for parameterized testing
+* AssertJ Core (version 3.24.2) for assertion testing
 
 
 ## Contributing
